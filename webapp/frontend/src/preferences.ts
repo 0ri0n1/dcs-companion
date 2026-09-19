@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { isThemeChoice } from './themes';
 import type { TextSize, ThemeChoice } from './themes';
 
-export const VIEWS = ['Navigation Scope', 'Controls', 'Guide', 'Sensors', 'Cockpit', 'Flight data', 'Data Health', 'Remote'] as const;
+export const VIEWS = ['Navigation Scope', 'Controls', 'Guide', 'Jev Copilot', 'Sensors', 'Cockpit', 'Flight data', 'Data Health', 'Remote'] as const;
 export const DISPLAY_STORAGE_KEY = 'dcs-copilot-display-v1';
 export interface DisplayPreferences {
   view: typeof VIEWS[number];

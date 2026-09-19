@@ -9,6 +9,7 @@ An experimental Windows companion for DCS World: a local navigation scope, aircr
 - **Hornet displays and bezels:** Left DDI, AMPCD and Right DDI appear in cockpit order on desktop and stack with their bezel buttons on a phone. Native display streams and exported text are separate sources. Images require explicit monitor-export and capture setup.
 - **Phone controls:** pair on a trusted local network, then choose **Connect controls → Enable live controls** on the phone. Supported momentary UFC, DDI and AMPCD buttons use your existing bindings. Workflow editing stays on the PC.
 - **Binding and flight reference:** supported F/A-18C and F-22A catalogues resolve installed defaults and your saved assignments. Cockpit text, flight data, source freshness and connection diagnostics remain available in their own views.
+- **Optional Jev copilot:** TypeSafe Jev can classify a request, estimate flight phase/workload, and select a fresh verified single-player mission contact. It is opt-in, online, display-only, and never queues an aircraft command. The API key stays in the backend environment.
 
 These are the current v26 browser features. Aircraft support is strongest for the Hornet; generic display layouts can accommodate additional exported displays, but do not imply working video, bindings or cockpit controls for every aircraft. Missing data stays unavailable.
 
@@ -32,7 +33,7 @@ DCS game files, aircraft modules, terrain assets and display drivers are not bun
 
 The launcher starts or reuses the collector; `collector.py` owns UDP `127.0.0.1:17781`. Do not run `listener.py` alongside it. Use **`webapp/Stop Dashboard.cmd`** to stop the companion.
 
-For optional automatic launch, see [Auto Start](webapp/docs/AUTOSTART.md). For installation, profile selection and optional integrations, start with the [installation guide](webapp/docs/INSTALL.md).
+For optional automatic launch, see [Auto Start](webapp/docs/AUTOSTART.md). For installation, profile selection and optional integrations, start with the [installation guide](webapp/docs/INSTALL.md). To enable the online Jev view, see [Jev copilot](webapp/docs/JEV.md).
 
 ## Use a phone or tablet
 

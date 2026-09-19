@@ -33,6 +33,11 @@ class SetupSelection(BaseModel):
     profile_id: str = Field(min_length=1, max_length=80)
 
 
+class JevEvaluationRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    query: str = Field(min_length=2, max_length=500)
+
+
 def _worker_interval(service):
     # Keep idle maintenance at its existing cadence. A pending touch should not
     # add 150 ms between fresh focus samples or after another guarded check.
@@ -48,6 +53,8 @@ def create_app(settings=None, service=None):
     holder = {"service": service}
     from .diagnostics import ConnectionDiagnostics
     diagnostics = ConnectionDiagnostics(settings.runtime_dir if owned else None)
+    from .jev import JevAdvisor
+    jev_advisor = JevAdvisor(settings)
 
     @asynccontextmanager
     async def lifespan(app):
@@ -98,6 +105,7 @@ def create_app(settings=None, service=None):
     app = FastAPI(title="DCS Companion", lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
     app.state.auth = auth
     app.state.connection_diagnostics = diagnostics
+    app.state.jev_advisor = jev_advisor
     from .snapshots import SharedSnapshot
     shared_snapshot = SharedSnapshot()
 
@@ -171,6 +179,29 @@ def create_app(settings=None, service=None):
     @app.get("/api/diagnostics")
     def connection_diagnostics():
         return diagnostics.snapshot()
+
+    @app.get("/api/jev/status")
+    def jev_status():
+        return jev_advisor.status()
+
+    @app.post("/api/jev/evaluate")
+    async def jev_evaluate(body: JevEvaluationRequest):
+        from .jev import JevServiceError, JevUnavailable
+        query = body.query.strip()
+        if len(query) < 2:
+            raise HTTPException(422, "Enter a request for the companion to evaluate.")
+        try:
+            snapshot = await asyncio.to_thread(holder["service"].snapshot, auth.clients())
+            result = await jev_advisor.evaluate(query, snapshot)
+            diagnostics.event("jev_evaluated", duration_ms=result.get("latency_ms"),
+                              intent=(result.get("intent") or {}).get("value"),
+                              proposal_allowed=result.get("proposal_allowed"))
+            return result
+        except JevUnavailable as exc:
+            raise HTTPException(503, str(exc)) from exc
+        except JevServiceError as exc:
+            diagnostics.event("jev_failed")
+            raise HTTPException(502, str(exc)) from exc
 
     @app.get("/api/bindings")
     def bindings(aircraft: Literal["F-22A", "FA-18C_hornet"] | None = None):
