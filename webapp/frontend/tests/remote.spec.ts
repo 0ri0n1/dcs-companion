@@ -76,7 +76,7 @@ test('paired phone explicitly connects, enables live and taps once; scoped disco
   const connectionId=requests.find(row=>row.path==='/api/remote/heartbeat')!.body.connection_id;expect(connectionId).toMatch(/^[a-f0-9-]{36}$/);
   await enable.click();await expect(session).toContainText('Live controls enabled for this flight');await expect(one).toBeEnabled();expect(actuations(requests).map(row=>row.path)).toEqual(['/api/remote/arm']);
   await one.click();await expect(page.locator('.remote-result')).toContainText('Live input completed');expect(actuations(requests).map(row=>row.path)).toEqual(['/api/remote/arm','/api/remote/tap']);expect(actuations(requests)[1].body).toEqual({action_id:'hornet.ufc.digit.1',idempotency_key:expect.stringMatching(/^[a-f0-9-]{36}$/)});
-  await page.getByRole('button',{name:'Disconnect controls',exact:true}).click();await expect(session).toContainText('Controls disconnected');await expect(one).toBeDisabled();await expect(enable).toBeDisabled();expect(requests.filter(row=>row.path==='/api/remote/disconnect')).toEqual([{path:'/api/remote/disconnect',method:'POST',body:{connection_id:connectionId}}]);expect(requests.filter(row=>row.path==='/api/remote/stop')).toEqual([]);
+  await page.getByRole('button',{name:'Disconnect controls',exact:true}).click();await expect(session).toContainText('Controls disconnected');await expect(one).toBeDisabled();await expect(enable).toBeDisabled();await expect.poll(()=>requests.filter(row=>row.path==='/api/remote/disconnect')).toEqual([{path:'/api/remote/disconnect',method:'POST',body:{connection_id:connectionId}}]);expect(requests.filter(row=>row.path==='/api/remote/stop')).toEqual([]);
   await page.getByRole('button',{name:'Connect controls',exact:true}).click();await expect(enable).toBeEnabled();await expect(session).toContainText('Connected in preview');expect(actuations(requests)).toHaveLength(2);
   await enable.click();await expect(session).toContainText('Live controls enabled for this flight');expect(actuations(requests)).toHaveLength(3);
   await page.reload();await expect(page.getByRole('button',{name:'Connect controls',exact:true})).toBeEnabled();await page.getByRole('button',{name:'UFC',exact:true}).click();await expect(session).toContainText('Controls disconnected');await expect(enable).toBeDisabled();await expect(one).toBeDisabled();expect(actuations(requests)).toHaveLength(3);
@@ -85,8 +85,23 @@ test('paired phone explicitly connects, enables live and taps once; scoped disco
 });
 
 test('workflow and registered script run by ID with visible progress and explicit Stop; no run on reconnect',async({page})=>{
-  const {requests,remote}=await mock(page);await openRemote(page);await page.getByRole('button',{name:'Connect controls',exact:true}).click();await page.getByRole('button',{name:'Workflows',exact:true}).click();const run=page.getByRole('button',{name:'Run Fixture sequence',exact:true});await expect(run).toBeEnabled();await run.click();expect(actuations(requests).at(-1)?.body).toMatchObject({workflow_id:'fixture-workflow'});await expect(page.locator('.workflow-progress')).toContainText('Completed');
-  await page.getByRole('button',{name:'Run Mission status',exact:true}).click();expect(actuations(requests).at(-1)?.body).toMatchObject({script_id:'mission-status'});remote.active_run={id:'active',status:'Running',mode:'preview',step_index:0,step_count:2,message:'Waiting'};remote.busy=true;await expect(page.getByRole('button',{name:'Stop current run',exact:true})).toBeEnabled();await page.getByRole('button',{name:'Stop current run',exact:true}).click();expect(requests.filter(row=>row.path==='/api/remote/stop')).toHaveLength(1);await page.reload();expect(actuations(requests)).toHaveLength(2);
+  const {requests,remote}=await mock(page);await openRemote(page);
+  await page.getByRole('button',{name:'Connect controls',exact:true}).click();
+  await page.getByRole('button',{name:'Workflows',exact:true}).click();
+  const run=page.getByRole('button',{name:'Run Fixture sequence',exact:true});
+  await expect(run).toBeEnabled();await run.click();
+  const workflowRequest={path:'/api/remote/run',method:'POST',body:{workflow_id:'fixture-workflow',idempotency_key:expect.stringMatching(/^[a-f0-9-]{36}$/)}};
+  await expect.poll(()=>actuations(requests)).toEqual([workflowRequest]);
+  await expect(page.locator('.workflow-progress')).toContainText('Completed');
+  await page.getByRole('button',{name:'Run Mission status',exact:true}).click();
+  const scriptRequest={path:'/api/remote/script',method:'POST',body:{script_id:'mission-status',idempotency_key:expect.stringMatching(/^[a-f0-9-]{36}$/)}};
+  await expect.poll(()=>actuations(requests)).toEqual([workflowRequest,scriptRequest]);
+  remote.active_run={id:'active',status:'Running',mode:'preview',step_index:0,step_count:2,message:'Waiting'};remote.busy=true;
+  await expect(page.getByRole('button',{name:'Stop current run',exact:true})).toBeEnabled();
+  await page.getByRole('button',{name:'Stop current run',exact:true}).click();
+  await expect.poll(()=>requests.filter(row=>row.path==='/api/remote/stop')).toEqual([{path:'/api/remote/stop',method:'POST',body:{}}]);
+  await page.reload();await expect(page.getByRole('button',{name:'Connect controls',exact:true})).toBeEnabled();
+  expect(actuations(requests)).toEqual([workflowRequest,scriptRequest]);
 });
 
 test('global execution ribbon distinguishes armed remote controls from the Guide preview',async({page})=>{
