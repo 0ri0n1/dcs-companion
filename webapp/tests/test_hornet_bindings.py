@@ -18,7 +18,7 @@ class HornetBindingTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
-        self.root = Path(self.tmp.name)
+        self.root = Path(self.tmp.name).resolve()
         self.f18 = BindingService(self.root/'data', self.root/'Install', self.root/'Saved', aircraft=HORNET)
         self.f22 = BindingService(self.root/'data', self.root/'Install', self.root/'Saved')
 
