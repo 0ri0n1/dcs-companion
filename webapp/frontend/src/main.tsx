@@ -1,0 +1,15 @@
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App';
+import './style.css';
+import './themes.css';
+import './setup.css';
+import './connection.css';
+import './pair-device.css';
+import { readDisplayPreferences } from './preferences';
+const initialDisplay=readDisplayPreferences();
+document.documentElement.dataset.theme=initialDisplay.theme==='auto'?'contrast':initialDisplay.theme;
+document.documentElement.dataset.readability=initialDisplay.textSize;
+document.documentElement.style.colorScheme=initialDisplay.theme==='daylight'?'light':'dark';
+createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);
+if ('serviceWorker' in navigator && import.meta.env.PROD) window.addEventListener('load', () => { void navigator.serviceWorker.register('/sw.js'); });

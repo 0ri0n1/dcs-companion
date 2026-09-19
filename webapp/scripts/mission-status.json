@@ -1,0 +1,12 @@
+{
+  "schema": "dcs-companion/mission-script/1",
+  "id": "mission-status",
+  "name": "Show mission time",
+  "description": "Show a five-second Companion connection and mission-time message in the current single-player mission. No cockpit controls are pressed.",
+  "context": "mission",
+  "aircraft": [
+    "*"
+  ],
+  "sha256": "9fed03b8537db0cc5985facc0052a69317e5195c88b631c2bd17bfcbfaafef84",
+  "enabled": true
+}

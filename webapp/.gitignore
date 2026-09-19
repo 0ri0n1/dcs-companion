@@ -1,0 +1,11 @@
+.venv/
+runtime/
+frontend/node_modules/
+__pycache__/
+.pytest_cache/
+data/bindings/
+data/navigation/
+data/adapters.json
+verification/
+frontend/test-results/
+frontend/playwright-report/

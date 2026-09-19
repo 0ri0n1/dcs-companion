@@ -1,0 +1,2 @@
+import { defineConfig } from '@playwright/test';
+export default defineConfig({testDir:'./tests',testMatch:'*.spec.ts',fullyParallel:true,workers:3,reporter:[['list'],['json',{outputFile:'test-results/results.json'}]],use:{baseURL:'http://127.0.0.1:4173',channel:process.env.CI?undefined:'chrome',serviceWorkers:'block',trace:'retain-on-failure'},webServer:{command:'npm run preview -- --port 4173',url:'http://127.0.0.1:4173',reuseExistingServer:!process.env.CI},outputDir:'test-results/artifacts'});

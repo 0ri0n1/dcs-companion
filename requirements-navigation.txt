@@ -1,0 +1,2 @@
+# Optional community airport positions/projections, read as data rather than imported.
+pydcs==0.15.0

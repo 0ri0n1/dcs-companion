@@ -1,0 +1,534 @@
+/* Aircraft-inspired display palettes. Semantic status colors stay independent
+   from the selected aircraft accent; no color implies a different data state. */
+:root {
+  color-scheme: dark;
+  --bg: #0c1215;
+  --panel: #152024;
+  --raised: #1c2a2e;
+  --field: #101a1e;
+  --ink: #f0f4ed;
+  --muted: #b4c2bc;
+  --line: #405454;
+  --edge-strong: #6b837d;
+  --accent: #c5ed9e;
+  --accent-ink: #13200b;
+  --positive: #a4efbb;
+  --warning: #ffcf8a;
+  --danger: #ffada7;
+  --info: #a3e0ed;
+  --map-bg: #0e191b;
+  --map-glow: #172c27;
+  --map-grid: #4b685c;
+  --map-label: #d1e1be;
+  --map-airfield: #c3dba8;
+  --map-navaid: #a4d0d0;
+  --body-size: 15px;
+  --detail-size: 13px;
+  --label-size: 12px;
+  --data-size: 16px;
+  --scope-label-size: 20px;
+}
+
+:root[data-theme="hornet"] {
+  --bg: #08130f;
+  --panel: #11231b;
+  --raised: #193227;
+  --field: #0c1b14;
+  --ink: #effff0;
+  --muted: #b2cbb9;
+  --line: #3e634b;
+  --edge-strong: #729d7c;
+  --accent: #b0ff9c;
+  --accent-ink: #10220c;
+  --positive: #b0f3be;
+  --warning: #ffda91;
+  --danger: #ffb0a8;
+  --info: #a9e8ee;
+  --map-bg: #0a1810;
+  --map-glow: #14351e;
+  --map-grid: #477454;
+  --map-label: #d0f3ce;
+  --map-airfield: #b6eea5;
+  --map-navaid: #a3e7d6;
+}
+
+:root[data-theme="raptor"] {
+  --bg: #101820;
+  --panel: #192735;
+  --raised: #253748;
+  --field: #13202c;
+  --ink: #f0f7ff;
+  --muted: #b9cbd9;
+  --line: #486276;
+  --edge-strong: #819aaf;
+  --accent: #a9dfff;
+  --accent-ink: #102333;
+  --positive: #acf0c6;
+  --warning: #ffd391;
+  --danger: #ffb1ad;
+  --info: #b4e8ef;
+  --map-bg: #101e29;
+  --map-glow: #203d4f;
+  --map-grid: #4c6e85;
+  --map-label: #d0e7f5;
+  --map-airfield: #b5d6f0;
+  --map-navaid: #a7e1dc;
+}
+
+:root[data-theme="eagle"] {
+  --bg: #171613;
+  --panel: #27241e;
+  --raised: #363126;
+  --field: #1e1b16;
+  --ink: #fff7e8;
+  --muted: #cec3ad;
+  --line: #69604b;
+  --edge-strong: #9c8b6b;
+  --accent: #ffd28c;
+  --accent-ink: #2b1d08;
+  --positive: #b6edbb;
+  --warning: #ffe6a8;
+  --danger: #ffb3a8;
+  --info: #b3e2ee;
+  --map-bg: #1b1913;
+  --map-glow: #342c19;
+  --map-grid: #74684b;
+  --map-label: #f1ddba;
+  --map-airfield: #ebd3a4;
+  --map-navaid: #b3dccc;
+}
+
+:root[data-theme="lightning"] {
+  --bg: #14141e;
+  --panel: #222332;
+  --raised: #303345;
+  --field: #1a1b28;
+  --ink: #f6f3ff;
+  --muted: #c5c3d8;
+  --line: #5a607a;
+  --edge-strong: #9396b3;
+  --accent: #d6c3ff;
+  --accent-ink: #251637;
+  --positive: #b2edc7;
+  --warning: #ffd99b;
+  --danger: #ffb2bf;
+  --info: #b3e5ef;
+  --map-bg: #191b2a;
+  --map-glow: #302e49;
+  --map-grid: #686989;
+  --map-label: #e5dcf8;
+  --map-airfield: #d9cbef;
+  --map-navaid: #b8dfe9;
+}
+
+:root[data-theme="daylight"] {
+  color-scheme: light;
+  --bg: #edf2f8;
+  --panel: #ffffff;
+  --raised: #e1e9f4;
+  --field: #f4f7fc;
+  --ink: #17273e;
+  --muted: #465870;
+  --line: #a1b2c8;
+  --edge-strong: #617998;
+  --accent: #154da9;
+  --accent-ink: #ffffff;
+  --positive: #176038;
+  --warning: #79500b;
+  --danger: #a72837;
+  --info: #145d78;
+  --map-bg: #eff5fc;
+  --map-glow: #dbe8f3;
+  --map-grid: #8aa1b6;
+  --map-label: #243d59;
+  --map-airfield: #315278;
+  --map-navaid: #236578;
+}
+
+:root[data-theme="contrast"] {
+  --bg: #000000;
+  --panel: #070b10;
+  --raised: #17212a;
+  --field: #000000;
+  --ink: #ffffff;
+  --muted: #e2ebf0;
+  --line: #778d9b;
+  --edge-strong: #c5dce8;
+  --accent: #85f5ff;
+  --accent-ink: #00171b;
+  --positive: #b8ffc7;
+  --warning: #ffe89b;
+  --danger: #ffb5bc;
+  --info: #aeeaff;
+  --map-bg: #000000;
+  --map-glow: #091620;
+  --map-grid: #7593a6;
+  --map-label: #ffffff;
+  --map-airfield: #e3f2ff;
+  --map-navaid: #b8f1e9;
+}
+
+:root {
+  /* Existing component aliases intentionally remain compatible. */
+  --green: var(--accent);
+  --amber: var(--warning);
+  --cyan: var(--info);
+  --red: var(--danger);
+  --accent-soft: color-mix(in srgb, var(--accent) 13%, var(--panel));
+  --positive-soft: color-mix(in srgb, var(--positive) 9%, var(--panel));
+  --warning-soft: color-mix(in srgb, var(--warning) 8%, var(--panel));
+  --danger-soft: color-mix(in srgb, var(--danger) 9%, var(--panel));
+  --info-soft: color-mix(in srgb, var(--info) 10%, var(--panel));
+  --hover: color-mix(in srgb, var(--accent) 10%, var(--raised));
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+:root[data-readability="large"] {
+  --body-size: 18px;
+  --detail-size: 16px;
+  --label-size: 14px;
+  --data-size: 19px;
+  --scope-label-size: 24px;
+}
+
+/* Shared surfaces, controls and semantic colors. */
+body, .app { color: var(--ink); background: var(--bg); }
+.app { font-size: var(--body-size); }
+.app-header, .top-nav, .health-ribbon { background: var(--panel); }
+button, select, input { color: var(--ink); }
+button { background: var(--raised); border-color: var(--line); }
+input, select, .search-box { background: var(--field); border-color: var(--line); }
+input::placeholder { color: var(--muted); opacity: 1; }
+input[type="range"], input[type="checkbox"] { accent-color: var(--accent); }
+button:hover:not(:disabled) { background: var(--hover); border-color: var(--edge-strong); }
+button:disabled { opacity: 1; color: var(--muted); background: var(--field); border-color: var(--line); }
+.view-tabs button, .declutter button, .route-strip button, .airfield-item,
+.nearest-row, .guide-action, .enemy-row { background: transparent; }
+.view-tabs button:hover:not(:disabled) { background: var(--accent-soft); }
+.segmented { background: var(--field); }
+.segmented button[aria-pressed="true"], .airfield-item.selected,
+.guide-action.selected, .keycap.selected { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+.health-ribbon b, .metric>div, .sensor-note strong, .frequency strong,
+.section-label, .thumb-controls>span, .queue-status code { color: var(--ink); }
+.badge { background: var(--raised); color: var(--muted); border-color: var(--line); }
+.badge.green { color: var(--positive); background: var(--positive-soft); border-color: var(--positive); }
+.badge.amber { color: var(--warning); background: var(--warning-soft); border-color: var(--warning); }
+.badge.red { color: var(--danger); background: var(--danger-soft); border-color: var(--danger); }
+.primary-button { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+.primary-button:hover:not(:disabled) { color: var(--accent-ink); background: var(--accent); border-color: var(--ink); }
+.danger-button, .notice.error { color: var(--danger); background: var(--danger-soft); border-color: var(--danger); }
+.plain-button { background: transparent; }
+.error { color: var(--danger); }
+.notice { color: var(--ink); background: var(--raised); border-color: var(--line); }
+.notice.amber, .connection-notice { color: var(--warning); background: var(--warning-soft); border-color: var(--warning); }
+.readiness-banner { background: var(--positive-soft); border-color: var(--line); }
+.readiness-banner strong { color: var(--positive); }
+.readiness-banner span:not(.badge) { color: var(--muted); }
+.readiness-banner.waiting, .readiness-banner.attention { background: var(--warning-soft); border-color: var(--line); }
+.readiness-banner.waiting strong, .readiness-banner.attention strong { color: var(--warning); }
+.directory-note { color: var(--accent); background: var(--accent-soft); border-color: var(--line); }
+.nearest-row, .frequency, .navaid-row, .binding-row, .step-details>div,
+.coverage-table td, .cockpit-readout dl>div, .enemy-row, .enemy-detail { border-color: var(--line); }
+.runway-ends>div { border-color: var(--line); }
+.airfield-glyph { color: var(--map-airfield); }
+.toggle-dot { border-color: var(--muted); }
+.toggle-dot.on { background: var(--accent); border-color: var(--accent); }
+summary { color: var(--muted); }
+summary:hover { color: var(--accent); }
+.app-footer { color: var(--muted); }
+.app-footer .dot { color: var(--positive); }
+.footer-separator { color: var(--muted); }
+.archive-download { color: var(--accent); border-color: var(--accent); }
+::selection { background: var(--accent); color: var(--accent-ink); }
+::-webkit-scrollbar-thumb { background: var(--edge-strong); }
+.airfield-scroll, .device-actions, .enemy-list, .cockpit-readout dl {
+  scrollbar-color: var(--edge-strong) var(--field);
+}
+
+/* Reading sizes use explicit tokens instead of scaling the whole interface. */
+:root :is(.eyebrow, .badge, .brand small, .clock small, .list-heading,
+  .metric>.eyebrow, .navigation-solution .metric.small>.eyebrow,
+  .section-label, .section-label .badge, .field-sub, .range-label,
+  .scope-corner, .scope-corner small, .directory-note, .app-footer,
+  .health-ribbon, .queue-progress span, .queue-status,
+  .coverage-table th, .device-title .micro, .source-path, .hash) {
+  font-size: var(--label-size);
+  line-height: 1.5;
+  letter-spacing: .04em;
+}
+:root :is(.source-path, .hash) { font-size: var(--label-size) !important; }
+:root :is(.airfield-item small, .nearest-row small, .keycap>span, .keycap small,
+  .tartarus-key small, .thumb-controls small, .binding-row span:not(.badge),
+  .binding-row .badge, .binding-row kbd, .frequency small,
+  .frequency>div>span, .navaid-row span, .navaid-row small,
+  .runway-ends span, .runway-ends small, .navigation-solution .metric.small small,
+  .sensor-readings small, .cockpit-readout dt, .export-group>summary small,
+  .enemy-row small, .enemy-detail dt, .enemy-detail-title>span,
+  .enemy-detail dd, .awareness-source, .awareness-warning, .adapter-grid pre,
+  .queue-status code) { font-size: var(--label-size); line-height: 1.55; }
+:root :is(.view-tabs button, .search-box input, .library-selector select,
+  .segmented button, .range-label select, .declutter button,
+  .route-strip button, .airfield-item strong, .nearest-row,
+  .solution-title strong, .binding-row strong, .guide-action strong,
+  .guide-purpose, .guide-mode-note p, .step-details dd, .primary-button,
+  .danger-button, .plain-button, .confirm-dialog p, .confirmation-check,
+  .pairing-card p, .pairing-card>label, .footnote-panel,
+  .cockpit-summary p, .sensor-summary strong, .sensor-readings dt,
+  .sensor-empty strong, .empty-state p, .readiness-banner strong,
+  .catalogue-toolbar>div>span:last-child, .awareness-header strong,
+  .enemy-detail-title>strong, .archive-download, .mission-identity strong) {
+  font-size: var(--body-size);
+  line-height: 1.5;
+}
+:root :is(.micro, .muted, .empty-small, .directory-note>span:last-child,
+  .sensor-note, .field-card .frequency, .navaid-row strong, summary,
+  .page-title p, .input-legend, .guide-action small, .guide-mode-note strong,
+  .step-details dt, .queue-card>p, .queue-history, .notice, .coverage-table,
+  .sensor-summary p, .sensor-empty p, .sensor-limits p, .sensor-source summary,
+  .cockpit-empty p, .mission-card p, .export-group-body>p,
+  .export-toolbar>.muted, .recording-card p, .display-title>.muted,
+  .awareness-header span, .awareness-unavailable, .enemy-detail>p,
+  .enemy-row, .readiness-banner span:not(.badge), .connection-notice,
+  .mobile-brightness, .export-group pre, .recording-card pre) {
+  font-size: var(--detail-size);
+  line-height: 1.6;
+}
+:root :is(.keycap small, .tartarus-key small) { line-height: 1.4; }
+:root :is(.cockpit-readout dd, .tartarus-key span, .step-details dd kbd) { font-size: var(--data-size); }
+.keycap, .tartarus-key { min-height: 76px; }
+.keycap { background: var(--field); border-color: var(--line); }
+.keycap>span { color: var(--muted); }
+.keycap.bound { border-bottom-color: var(--accent); }
+.keycap.conflict { border-bottom-color: var(--warning); }
+.tartarus-key { background: var(--raised); border-color: var(--line); }
+.thumb-controls { flex-wrap: wrap; gap: 16px 22px; }
+.thumb-controls>span { min-width: 115px; }
+.thumb-controls small { max-width: 110px; white-space: normal; overflow-wrap: anywhere; }
+kbd { color: var(--accent); background: var(--field); border-color: var(--edge-strong); }
+.legend-circle { border-color: var(--muted); }
+.category-nav { border-left-color: var(--info); }
+.category-weapons { border-left-color: var(--danger); }
+.category-systems { border-left-color: var(--warning); }
+.category-flight { border-left-color: var(--positive); }
+.queue-progress span { color: var(--muted); border-color: var(--line); }
+.queue-progress span.current { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+.confirm-dialog { color: var(--ink); background: var(--panel); border-color: var(--edge-strong); }
+.confirm-dialog::backdrop { background: #000a; }
+.pairing-overlay { background: color-mix(in srgb, var(--bg) 94%, transparent); }
+.skip-link { background: var(--accent); color: var(--accent-ink); }
+
+/* Exact exported text and historical readings remain visually distinct. */
+.sensor-readings { border-color: var(--line); }
+.sensor-readings>.eyebrow { color: var(--accent); }
+.sensor-readings dl>div, .cockpit-readout { background: var(--field); border-color: var(--edge-strong); }
+.sensor-readings dt, .cockpit-readout dt { color: var(--muted); }
+.sensor-readings dd, .cockpit-readout dd { color: var(--accent); }
+.sensor-readings.last-observed dl>div, .cockpit-readout.historical {
+  background: var(--warning-soft); border-color: var(--line);
+}
+.sensor-readings.last-observed dd, .cockpit-readout.historical dd { color: var(--muted); }
+.export-group pre, .recording-card pre { background: var(--field); color: var(--ink); border-color: var(--line); }
+
+/* Scope colors include presentation attributes set in the SVG source. */
+.scope-panel, .scope-canvas { background: var(--map-bg); }
+.scope-toolbar, .declutter { border-color: var(--line); }
+.scope-canvas #scopeGlow stop:first-child { stop-color: var(--map-glow); }
+.scope-canvas #scopeGlow stop:last-child { stop-color: var(--map-bg); }
+.scope-canvas svg>circle { stroke: var(--map-grid); }
+.scope-grid { stroke: var(--map-grid); }
+.compass-label, .ring-label { fill: var(--map-label); }
+.field-symbol { fill: var(--map-airfield); stroke: var(--map-airfield); }
+.field-symbol circle { fill: var(--map-bg); }
+.field-symbol .hit-target, .navaid-symbol>circle { fill: transparent; stroke: none; }
+.field-symbol text, .navaid-symbol text, .waypoint-symbol text, .mission-symbol text {
+  fill: var(--map-label); stroke: var(--map-bg); stroke-width: 4px;
+  font-size: var(--scope-label-size);
+}
+.field-symbol.active, .navaid-symbol:focus { stroke: var(--accent); }
+.field-symbol.active text { fill: var(--accent); }
+.navaid-symbol { stroke: var(--map-navaid); }
+.route-line { stroke: var(--info); }
+.direct-line { stroke: var(--accent); opacity: 1; }
+.waypoint-symbol { fill: var(--map-bg); stroke: var(--info); }
+.waypoint-symbol.active { fill: var(--map-glow); stroke: var(--accent); }
+.mission-symbol { stroke: var(--warning); }
+.runway-line { stroke: var(--ink); }
+.ownship { fill: var(--accent); stroke: var(--accent); }
+.heading-vector { stroke: var(--accent); }
+.track-vector { stroke: var(--info); }
+.scope-empty text, .scope-empty text:first-child { fill: var(--muted); font-size: var(--scope-label-size); letter-spacing: .03em; }
+.compass-label { font-size: calc(var(--scope-label-size) + 4px); }
+.ring-label { font-size: var(--scope-label-size); }
+.scope-corner { color: var(--muted); }
+.scope-canvas { height: 560px; }
+.enemy-symbol { fill: var(--danger); stroke: var(--danger); }
+.enemy-symbol text { fill: var(--danger); stroke: var(--map-bg); font-size: var(--scope-label-size); }
+.enemy-symbol text { pointer-events: all; }
+.enemy-symbol .enemy-selection { stroke: var(--warning); }
+.enemy-symbol:focus, .enemy-symbol:focus .enemy-selection,
+.enemy-symbol:hover .enemy-selection { stroke: var(--ink); }
+.mission-awareness { border-color: var(--edge-strong); }
+.awareness-header strong, .enemy-detail-title>strong { color: var(--warning); }
+.awareness-header span, .enemy-row small, .enemy-detail>p { color: var(--muted); }
+.enemy-category { color: var(--danger); }
+.enemy-row.selected { background: var(--danger-soft); }
+.awareness-body { height: 174px; }
+.enemy-row { min-height: 60px; }
+.enemy-detail dl { gap: 12px; }
+.awareness-source summary { min-height: 44px; padding: 10px 0; }
+
+/* Every operable target keeps a comfortable touch area. */
+:root :is(button, select, summary, .segmented button, .range-label select,
+  .declutter button, .route-strip button, .scope-toolbar .segmented button) { min-height: 44px; }
+.confirmation-check { min-height: 44px; }
+.metric>.eyebrow { white-space: normal; }
+.badge { white-space: normal; }
+.readiness-banner>div:first-child { flex-wrap: wrap; row-gap: 4px; }
+.health-ribbon { flex-wrap: wrap; gap: 10px 28px; }
+.navigation-solution { grid-template-columns: 1.35fr repeat(5,minmax(0,1fr)); }
+.metric.small>div { white-space: normal; }
+.top-nav { flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px; }
+.view-tabs { flex-wrap: wrap; min-width: 0; }
+.view-tabs button { min-height: 48px; }
+.display-settings { gap: 14px; margin-left: auto; }
+.display-settings input { accent-color: var(--accent); }
+.display-settings .appearance-button { font-size: var(--detail-size); padding: 8px 14px; white-space: nowrap; }
+.panel-header { flex-wrap: wrap; }
+.binding-toolbar { flex-wrap: wrap; }
+.sensor-summary>.metric { min-width: 170px; }
+.mission-identity { max-width: 430px; }
+.mission-identity strong { overflow: visible; white-space: normal; overflow-wrap: anywhere; }
+.app-header { height: auto; min-height: 98px; padding-top: 16px; padding-bottom: 16px; }
+
+/* Appearance is a local display preference, not an aircraft command. */
+.appearance-dialog {
+  width: min(780px, calc(100% - 32px)); max-height: 90dvh; overflow: auto;
+  padding: 28px; border: 1px solid var(--edge-strong); border-radius: 12px;
+  background: var(--panel); color: var(--ink); box-shadow: 0 24px 100px #0008;
+  font-size: var(--body-size);
+}
+.appearance-dialog::backdrop { background: #000a; backdrop-filter: blur(4px); }
+.appearance-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; }
+.appearance-heading h2 { margin-top: 8px; font-size: 28px; }
+.appearance-heading button { flex-shrink: 0; min-width: 44px; }
+.appearance-intro { color: var(--muted); font-size: var(--body-size); line-height: 1.6; }
+.appearance-current, .appearance-tip { color: var(--muted); font-size: var(--detail-size); line-height: 1.6; }
+.appearance-controls { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 18px; margin: 24px 0; }
+.appearance-dialog .appearance-controls label { display: flex; flex-direction: column; align-items: stretch; gap: 9px; color: var(--muted); font-size: var(--body-size); }
+.appearance-controls select { width: 100%; min-width: 0; font-size: var(--body-size); }
+.theme-gallery { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.theme-choice { padding: 15px; text-align: left; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.theme-choice[aria-pressed="true"] { border: 2px solid var(--accent); background: var(--accent-soft); padding: 14px; }
+.theme-choice strong { font-size: var(--body-size); color: var(--ink); font-weight: 600; }
+.theme-choice small { font-size: var(--detail-size); line-height: 1.5; color: var(--muted); }
+.theme-swatches { display: flex; height: 18px; gap: 5px; margin-bottom: 3px; }
+.theme-swatches i { display: block; width: 32px; border: 1px solid var(--edge-strong); border-radius: 3px; }
+.appearance-preview { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 24px 0; padding: 18px; background: var(--field); border: 1px solid var(--line); border-radius: 6px; }
+.appearance-preview strong { font-size: var(--body-size); }
+.appearance-preview small { flex-basis: 100%; font-size: var(--detail-size); line-height: 1.6; }
+.appearance-preview>div { display: flex; flex-wrap: wrap; gap: 10px; }
+.appearance-dialog .appearance-brightness { display: flex; flex-wrap: wrap; align-items: center; gap: 15px; padding: 18px 0; font-size: var(--body-size); color: var(--ink); }
+.appearance-brightness label { font-size: var(--body-size); }
+.appearance-brightness input { flex: 1; width: auto; min-width: 100px; min-height: 44px; padding: 0; accent-color: var(--accent); }
+.appearance-brightness output { font: var(--data-size) ui-monospace,Consolas,monospace; min-width: 4ch; }
+.appearance-footer { display: flex; justify-content: space-between; gap: 14px; padding-top: 20px; border-top: 1px solid var(--line); }
+.appearance-footer button { padding: 10px 18px; font-size: var(--body-size); }
+
+@media (min-width: 2200px) and (max-height: 1500px) {
+  .smart-layout .scope-canvas, .smart-layout .awareness-enabled .scope-canvas,
+  .awareness-enabled .scope-canvas { height: 520px; }
+  .awareness-enabled .flight-metrics { padding: 18px 6px; }
+  .awareness-enabled .mission-awareness { padding: 16px 18px; }
+}
+
+:root[data-readability="large"] .scope-canvas,
+:root[data-readability="large"] .smart-layout .awareness-enabled .scope-canvas { height: 640px; }
+:root[data-readability="large"] :is(.field-card, .destination-list) { max-height: none; }
+:root[data-readability="large"] .awareness-body { height: 224px; }
+:root[data-readability="large"] .enemy-row { min-height: 72px; }
+:root[data-readability="large"] .device-columns { grid-template-columns: repeat(3,minmax(0,1fr)); }
+:root[data-readability="large"] .keyboard { min-width: 900px; }
+
+@media (max-width: 1450px) {
+  .top-nav { gap: 10px; }
+  .view-tabs { gap: 2px; }
+  .display-settings { padding: 4px 0; }
+  .view-tabs button { padding: 8px 10px; }
+  .readiness-banner { flex-wrap: wrap; }
+  .readiness-badges { max-width: none; justify-content: flex-start; }
+  .navigation-solution { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .health-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  :root[data-readability="large"] .device-columns { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+
+@media (max-width: 1200px) {
+  .navigation-layout { grid-template-columns: 235px minmax(0,1fr); }
+  .awareness-body { height: auto; }
+  .enemy-list { max-height: 220px; }
+  .enemy-detail { max-height: 235px; }
+  :root[data-readability="large"] .awareness-body { height: auto; }
+  :root[data-readability="large"] .navigation-layout { grid-template-columns: 1fr; }
+  :root[data-readability="large"] .scope-column { grid-row: 1; }
+  :root[data-readability="large"] .destination-list { grid-row: 2; }
+  :root[data-readability="large"] .field-card { grid-column: 1; grid-row: 3; }
+  .awareness-count { flex-shrink: 1; }
+  .sensor-summary>.metric { min-width: 150px; }
+}
+
+@media (max-width: 1050px) {
+  .top-nav { padding: 8px 16px; }
+  .view-tabs { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .display-settings { display: flex; width: 100%; justify-content: flex-end; }
+  .display-settings>.badge { display: none; }
+  .display-settings label { font-size: 20px; }
+  .mission-identity { max-width: 100%; }
+  .mission-identity strong { font-size: var(--body-size); }
+  .flight-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px 0; }
+  .flight-metrics .metric:nth-child(2) { border-right: 0; }
+  .display-title { flex-wrap: wrap; }
+}
+
+@media (max-width: 800px) {
+  :root { --scope-label-size: 26px; }
+  :root[data-readability="large"] { --scope-label-size: 29px; }
+  .navigation-layout { grid-template-columns: 1fr; }
+  .app-header { padding: 16px 18px; }
+  .brand strong { font-size: 18px; letter-spacing: .06em; }
+  .brand small { letter-spacing: .03em; }
+  .header-status { margin-left: auto; }
+  .view-tabs { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .view-tabs button { text-align: left; }
+  .scope-title { align-items: flex-start; flex-wrap: wrap; }
+  .scope-toolbar { flex-wrap: wrap; }
+  .scope-canvas, :root[data-readability="large"] .scope-canvas,
+  :root[data-readability="large"] .smart-layout .awareness-enabled .scope-canvas { height: clamp(400px, 95vw, 620px); }
+  .scope-corner { gap: 4px; }
+  .scope-corner.top-left { top: 10px; left: 12px; }
+  .scope-corner.bottom-left { bottom: 8px; left: 12px; }
+  .scope-corner.bottom-right { bottom: 8px; right: 12px; }
+  .declutter { justify-content: flex-start; gap: 8px 18px; }
+  .navigation-solution { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .health-grid, :root[data-readability="large"] .device-columns { grid-template-columns: 1fr; }
+  .step-details>div { grid-template-columns: 1fr 1.15fr; }
+  .appearance-dialog { padding: 22px; }
+  .appearance-controls { grid-template-columns: 1fr; }
+  .appearance-footer { flex-wrap: wrap; }
+}
+
+@media (max-width: 480px) {
+  .theme-gallery { grid-template-columns: 1fr; }
+  .brand { flex: 1; }
+  .header-status { width: 100%; margin-left: 0; }
+  .enemy-detail dl { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .export-group>summary { flex-wrap: wrap; gap: 12px; }
+  .scope-corner.bottom-left { max-width: 42%; }
+  .scope-corner.bottom-right { max-width: 42%; }
+  .scope-corner { font-size: 12px; }
+  .dialog-buttons { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .appearance-dialog::backdrop { backdrop-filter: none; }
+}

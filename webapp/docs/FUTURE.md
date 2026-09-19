@@ -1,0 +1,14 @@
+# Next work, in order
+
+1. Run the versioned Terrain API exporter in the DCS/Mission Editor runtime for each installed map, then import its validated cache. This unlocks authoritative airport references, elevations, runway ends, thresholds, pavement centerlines and dimensions. Marianas WWII has no current geographic airport reference points.
+2. Extend the delivered read-only mission name/theatre metadata into an authoritative mission-member hash for route/weather overlays. The current existing-bridge metadata and lifecycle filename are sufficient to label the mission, but do not establish that a selected .miz overlay is the exact active archive. Preserve the one collector and existing export restrictions.
+3. Perform the F-22 single-player ground checklist, recording telemetry and audit evidence. Verify mission-change invalidation, next/previous selection and navigation mode. Add a confirmer only after a reliable F-22 observation is measured. Then fly the listed navigation checks.
+4. Validate the DCS magnetic-heading and mission wind direction conventions in runtime. Until then, do not turn an unverified convention into a runway recommendation. Check community airfield reference points against F10/Terrain API.
+5. Inspect F-22 sensors in an instrumented flight under known export permissions. Enable only genuine onboard data with individual source/age labels. The separate single-player Mission awareness layer uses live mission units and never substitutes for radar. Test multiplayer export denial separately.
+6. Flight-validate the delivered F/A-18C controls reference, complete cockpit text and FLIR/laser labels, then consider page-sensitive cockpit programming using existing waypoint/navigation tools. The Hornet catalogue and readouts are implemented; browser actuation remains disabled until a separate measured integration is requested.
+7. Build independent F-15C and F-23 binding indexes and runtime capability tests. FC-family command-name similarity does not confer support.
+8. The VSN F-35 package is installed on this machine. Its A/B/C variants are listed but unverified. Resolve each variant's actual defaults/diffs and test independently before enabling cockpit actions.
+9. If physical device highlighting is wanted, add a verified Windows Raw Input observer that does not intercept controls. Verify stable device identities and active Synapse profiles; keep physical detection, companion send and observed state changes visually distinct.
+10. Test a real tablet on its intended private LAN, then add HTTPS/pairing improvements before use outside that trusted network. The browser responsive tests are not evidence of real tablet integration.
+
+Automatic sequences, aircraft runway-suitability filtering without verified requirements, missing runway geometry and unverified sensor contacts remain unavailable. Additional aircraft can still use generic navigation when their ownship and theatre data are valid.

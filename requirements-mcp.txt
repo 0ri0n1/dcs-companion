@@ -1,0 +1,3 @@
+# Optional stdio MCP server. The browser companion does not require this.
+-r webapp/requirements-lock.txt
+mcp==1.26.0

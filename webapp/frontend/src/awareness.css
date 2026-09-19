@@ -1,0 +1,13 @@
+.scope-canvas .enemy-symbol.friendly-symbol{fill:var(--cyan);stroke:var(--cyan)}
+.scope-canvas .friendly-symbol text{fill:var(--cyan);stroke:var(--map-bg,var(--bg))}
+.scope-canvas .friendly-symbol .friendly-frame{fill:none;stroke-width:1.7}
+.scope-canvas .friendly-symbol .enemy-hit{fill:transparent;stroke:none}
+.scope-canvas .contact-touch-hit{fill:transparent;stroke:none;pointer-events:all;cursor:pointer}
+.scope-canvas .enemy-symbol .contact-direction-cue,.scope-canvas .enemy-symbol .contact-direction-unknown{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.mission-awareness .friendly-row .enemy-category{color:var(--cyan)}
+.mission-awareness .friendly-row.selected{background:color-mix(in srgb,var(--cyan) 13%,var(--panel))}
+.mission-awareness .awareness-count>strong{display:block}
+.mission-awareness .awareness-body.contact-list-only{grid-template-columns:minmax(0,1fr);height:auto}
+.mission-awareness .contact-list-only .enemy-list{max-height:220px}
+.navigation-solution .solution-title strong{overflow-wrap:anywhere}
+.navigation-solution .solution-title small{display:block;margin-top:6px;font-size:var(--label-size,12px);color:var(--muted);line-height:1.5;overflow-wrap:anywhere}

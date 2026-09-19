@@ -1,0 +1,228 @@
+{
+ "aircraft": "FA-18C_hornet",
+ "display": "2",
+ "sweep": "left",
+ "confidence": "MEASURED - press-and-read-back sweeps (TAC menu + SUPT menu bases) with churn subtraction and reset-to-base, 2026-08-16 in flight.",
+ "method_notes": [
+  "Bezel layout is IDENTICAL across AMPCD, left DDI and right DDI (measured independently on all three).",
+  "PB meanings are PAGE-DEPENDENT; 'pages' is the truth, 'buttons' is the deck-label compromise.",
+  "PB 7, 9, 14 have no measured function on either menu (page-specific elsewhere, e.g. radar/format pages).",
+  "Display id census [MEASURED]: 1=HUD, 2=left DDI, 3=RIGHT DDI (was misdocumented as 'radar page' - radar is just its usual content), 4=AMPCD, 5=IFEI (NOT a DDI), 6=UFC, 7=ALR-67 RWR azimuth indicator (serves RWR_PrioritySetting; letter tracked DIS TYPE knob N->I in flight 2026-08-16)."
+ ],
+ "pages": {
+  "TAC_MENU": {
+   "3": {
+    "label": "HUD",
+    "tag": "MEASURED",
+    "evidence": "landing = HUD repeater"
+   },
+   "4": {
+    "label": "RDR ATTK",
+    "tag": "MEASURED",
+    "evidence": "landing = attack radar (Radar_mode, PRF, elevation bars)"
+   },
+   "5": {
+    "label": "STORES",
+    "tag": "MEASURED",
+    "evidence": "landing = stores (GUN, Master_Arm_Status, STA labels)"
+   },
+   "13": {
+    "label": "SA",
+    "tag": "MEASURED+DOC",
+    "evidence": "landing = SA compass; guide p204"
+   },
+   "17": {
+    "label": "EW",
+    "tag": "MEASURED",
+    "evidence": "landing = EW (ALE-47, ALR priority)"
+   },
+   "18": {
+    "label": "MENU",
+    "tag": "MEASURED",
+    "evidence": "toggles TAC/SUPT"
+   },
+   "20": {
+    "label": "TGT DATA",
+    "tag": "MEASURED",
+    "evidence": "landing = TGT DATA ownship"
+   },
+   "inert": [
+    "1",
+    "2",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "14",
+    "15",
+    "16",
+    "19"
+   ]
+  },
+  "SUPT_MENU": {
+   "1": {
+    "label": "ADI",
+    "tag": "MEASURED"
+   },
+   "2": {
+    "label": "HSI",
+    "tag": "MEASURED"
+   },
+   "6": {
+    "label": "MIDS",
+    "tag": "MEASURED"
+   },
+   "8": {
+    "label": "BIT",
+    "tag": "MEASURED"
+   },
+   "10": {
+    "label": "MUMI",
+    "tag": "MEASURED"
+   },
+   "11": {
+    "label": "CHKLST",
+    "tag": "MEASURED"
+   },
+   "12": {
+    "label": "ENG",
+    "tag": "MEASURED"
+   },
+   "15": {
+    "label": "FCS",
+    "tag": "MEASURED"
+   },
+   "16": {
+    "label": "UFC BU",
+    "tag": "MEASURED"
+   },
+   "18": {
+    "label": "MENU",
+    "tag": "MEASURED"
+   },
+   "19": {
+    "label": "FPAS",
+    "tag": "MEASURED"
+   },
+   "20": {
+    "label": "FUEL",
+    "tag": "MEASURED"
+   },
+   "inert": [
+    "3",
+    "4",
+    "5",
+    "7",
+    "9",
+    "13",
+    "14",
+    "17"
+   ]
+  }
+ },
+ "buttons": {
+  "1": {
+   "label": "ADI",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "2": {
+   "label": "HSI",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "3": {
+   "label": "HUD",
+   "plain": "TAC",
+   "inert": false
+  },
+  "4": {
+   "label": "RDR ATTK",
+   "plain": "TAC",
+   "inert": false
+  },
+  "5": {
+   "label": "STORES",
+   "plain": "TAC",
+   "inert": false
+  },
+  "6": {
+   "label": "MIDS",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "7": {
+   "label": null,
+   "plain": null,
+   "inert": true
+  },
+  "8": {
+   "label": "BIT",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "9": {
+   "label": null,
+   "plain": null,
+   "inert": true
+  },
+  "10": {
+   "label": "MUMI",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "11": {
+   "label": "CHKLST",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "12": {
+   "label": "ENG",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "13": {
+   "label": "SA",
+   "plain": "TAC",
+   "inert": false
+  },
+  "14": {
+   "label": null,
+   "plain": null,
+   "inert": true
+  },
+  "15": {
+   "label": "FCS",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "16": {
+   "label": "UFC BU",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "17": {
+   "label": "EW",
+   "plain": "TAC",
+   "inert": false
+  },
+  "18": {
+   "label": "MENU",
+   "plain": "TAC-SUPT",
+   "inert": false
+  },
+  "19": {
+   "label": "FPAS",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "20": {
+   "label": "FUEL-TGT",
+   "plain": "SUPT-TAC",
+   "inert": false
+  }
+ }
+}

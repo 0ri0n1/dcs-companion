@@ -1,0 +1,30 @@
+import { useState } from 'react';
+import { Badge, Metric } from './Scope';
+import type { RecordData, Snapshot } from './types';
+import { age, list, number, obj, text } from './utils';
+
+function json(value:unknown) {try{return JSON.stringify(value,null,2)??'';}catch{return 'Export could not be represented as text.';}}
+export default function FlightData({snapshot,usable,elapsed=0}:{snapshot?:Snapshot;usable:boolean;elapsed?:number}) {
+  const [search,setSearch]=useState(''),[category,setCategory]=useState('');
+  const exported=obj(snapshot?.export_data),mission=snapshot?.mission,health=snapshot?.health;
+  const matching=Boolean(health?.aircraft&&exported.aircraft===health.aircraft&&(!exported.session||exported.session===health.session));
+  const permitted=usable&&matching;
+  const groups=list(exported.groups),recording=obj(exported.recording),needle=search.trim().toLowerCase();
+  const prepared=groups.map((group):RecordData & {data:unknown;serialized:string;groupAge:number|undefined;status:string}=>{
+    const blocked=['denied','export denied','unavailable','offline','unsupported'].includes(text(group.status,'Unavailable').toLowerCase());
+    const data=permitted&&!blocked?group.data:undefined;
+    const ageValue=number(group.age_s),groupAge=ageValue===undefined?undefined:ageValue+elapsed;
+    const reported=text(group.status,'Unavailable');
+    const status=!usable?'Offline':!matching?'Unavailable':reported==='Available'&&(groupAge===undefined||groupAge>3||health?.telemetry_fresh!==true)?'Last exported':reported;
+    return {...group,data,serialized:json(data),groupAge,status};
+  }).filter(group=>(!category||group.id===category)&&`${text(group.label,'')} ${text(group.id,'')} ${group.serialized}`.toLowerCase().includes(needle));
+  const status=!usable?'Offline':!matching?'Unavailable':text(exported.status,'Unverified');
+  const captureEpoch=number(exported.captured_at);
+  return <div className="page-view flight-data-view"><div className="page-title"><div><span className="eyebrow">READ-ONLY · EXPORT INSPECTOR</span><h1>Flight data<span className="title-period">.</span></h1><p>Browse the data this bridge actually receives. Diagnostic fields are source evidence, not verified tactical contacts.</p></div><Badge tone="amber">{status}</Badge></div>
+    <section className="panel mission-card"><div><span className="eyebrow">MISSION</span><h2>{usable?text(mission?.name,'Mission unavailable'):'Mission unavailable'}</h2><p>{usable?text(mission?.detail,'No mission detail exported.'):'Reconnect to read current mission data.'}</p></div><Metric label="THEATRE" value={usable?text(mission?.theatre):'Unknown'} small/><Metric label="MISSION STATUS" value={usable?text(mission?.status,'Unavailable'):'Offline'} small/><details className="sensor-source"><summary>Mission source details</summary><p>{text(mission?.source,'Source unavailable')}</p><p>Reported age · {age(mission?.age_s)}</p></details></section>
+    <p className="micro export-capture">Snapshot captured · {usable&&captureEpoch!==undefined?new Date(captureEpoch*1000).toLocaleString():'Unknown'} · Each category retains its own freshness and source.</p><div className="export-toolbar"><label className="search-box"><span>⌕</span><input aria-label="Search exported data" value={search} onChange={event=>setSearch(event.target.value)} placeholder="Search categories, field names or values…"/></label><label className="export-category"><span className="eyebrow">CATEGORY</span><select aria-label="Export category" value={category} onChange={event=>setCategory(event.target.value)}><option value="">All exported categories</option>{groups.map((group,index)=><option key={text(group.id,String(index))} value={text(group.id,'')}>{text(group.label, text(group.id))}</option>)}</select></label><span className="muted">{prepared.length} categories</span></div>
+    <div className="export-groups">{prepared.map((group,index)=><details className="panel export-group" key={text(group.id,String(index))} open={needle?true:undefined}><summary><span><strong>{text(group.label,text(group.id))}</strong><small>{group.status==='Available'?'Exported data':'Read source status before using these values'} · {age(group.groupAge)}</small></span><Badge tone={group.status==='Available'?'green':'amber'}>{group.status}</Badge></summary><div className="export-group-body"><p>{text(group.detail,'Exact received fields; names and values are not interpreted as aircraft state or a radar picture.')}</p>{group.status!=='Available'&&group.data!==undefined&&<p className="notice historical-caption">LAST EXPORTED / UNVERIFIED DATA — NOT A CURRENT TACTICAL PICTURE</p>}{group.data===undefined||group.data===null?<p className="empty-small">No permitted data exported for this category.</p>:<pre tabIndex={0} aria-label={`${text(group.label,text(group.id))} exported JSON`}>{group.serialized}</pre>}<details className="sensor-source"><summary>Source details</summary><p>{text(group.source,'Source unavailable')}</p></details></div></details>)}</div>
+    {!prepared.length&&<div className="panel empty-state"><h2>{needle?'No matching exported fields':'No exported categories available'}</h2><p>{needle?'Try a different field name or value.':'Permitted packet data will appear when the bridge receives it.'}</p></div>}
+    <div className="panel recording-card"><div><span className="eyebrow">AUTOMATIC PACKET RECORDING</span><h2>{usable?text(recording.status,'Unavailable'):'Offline'}</h2><p>Recording follows the local bridge. This browser does not start another telemetry listener.</p>{usable&&recording.status==='Recording'&&<a className="archive-download" href="/api/export/archive/0" download>Download latest packet archive ↓</a>}</div><details className="sensor-source"><summary>Recording and packet source details</summary><p>Packet types · {Array.isArray(exported.packet_types)?exported.packet_types.map(item=>text(item)).join(', '):'Unknown'}</p><pre>{json(usable?recording:{status:'Offline'})}</pre>{Array.isArray(exported.notes)&&exported.notes.map((note,index)=><p key={index}>{text(note)}</p>)}</details></div>
+  </div>;
+}

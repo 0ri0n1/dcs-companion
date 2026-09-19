@@ -1,0 +1,103 @@
+{
+ "_comment": "Hard-won cockpit reference for the F/A-18C. Verified in-flight, not guessed.",
+ "aircraft": "FA-18C_hornet",
+ "verified_utc": "2026-08-15 | SEQUFC page + A/P option 5 added 2026-08-24",
+ "ufc_pages": {
+  "A/P": {
+   "opened_by": "UFC Function Selector Pushbutton - A/P",
+   "verified_by": "user read the UFC in flight 2026-08-15 after an incorrect guess",
+   "option_select": {
+    "1": {
+     "label": "ATTH",
+     "meaning": "Attitude Hold"
+    },
+    "2": {
+     "label": "HSEL",
+     "meaning": "Heading Select - STEERS THE JET, do not press casually"
+    },
+    "3": {
+     "label": "BALT",
+     "meaning": "Barometric Altitude Hold - holds altitude at moment of engagement"
+    },
+    "4": {
+     "label": "RALT",
+     "meaning": "Radar Altitude Hold"
+    },
+    "5": {
+     "label": "CPL",
+     "meaning": "Couple - flies the selected steering (WYPT or TCN). ROLL ONLY: it sinks in turns, so pair it with BALT. Was recorded here as unused/unknown until 2026-08-24, when it was read live as CPL on the UFC and corroborated by the HUD Window6_cue reading 'CPL WYPT'."
+    }
+   }
+  },
+  "SEQUFC": {
+   "opened_by": "AMPCD PB 1 from HSI > DATA > WYPT (bind RShift+1)",
+   "verified_by": "read live off indication id 6 on 2026-08-24 during IFR 01, while building SEQ 3; corroborated by the resulting WYPT_SequenceData going 0 -> 0-1 -> 0-1-2 -> 0-1-2-3",
+   "option_select": {
+    "1": {
+     "label": "GSPD",
+     "meaning": "ground speed for the waypoint"
+    },
+    "2": {
+     "label": "TGT",
+     "meaning": "mark waypoint as target"
+    },
+    "3": {
+     "label": "TOT",
+     "meaning": "time on target"
+    },
+    "4": {
+     "label": "INS",
+     "meaning": "INSERT into the SELECTED sequence. ONE-SHOT: the ':' cue clears after every ENT, so it must be re-pressed before EACH waypoint number."
+    },
+    "5": {
+     "label": "DEL",
+     "meaning": "delete from the selected sequence"
+    }
+   },
+   "auto_timeout_seconds": "10-15",
+   "timeout_note": "The window closes on its own. Verifying between presses with MCP round-trips expires it and the next option-select lands on a dead UFC. Drive the whole entry as one burst.",
+   "ordering_rule": "An entry is appended to the END of the SELECTED sequence (guide p133). Cycle AMPCD PB 15 to SEQ 3 BEFORE opening this window, or the numbers land in SEQ 1.",
+   "empty_sequence_tell": "An empty sequence shows as the WYPT_SequenceData element being ABSENT from the display dump, not blank."
+  }
+ },
+ "autopilot_semantics": {
+  "BALT": "Captures the barometric altitude present at the instant of engagement. It cannot be given a target altitude. To hold 20000 ft the aircraft must be AT 20000 ft when engaged.",
+  "ATC": "Automatic Throttle Control. CRUISE mode (gear up, flaps up) holds the airspeed present at the instant of engagement. Also cannot be given a target.",
+  "disengage": "Paddle switch (Autopilot/Nosewheel Steering Disengage) - bound to 'A' by module default."
+ },
+ "observed_behaviour": {
+  "ATC_engaged_2026_08_15": "IAS held within 2 kt (294.4-296.2) while vertical speed swung from -4250 to -330 fpm; RPM automatically ramped 78%->86% tracking the shallowing descent. Confirms autothrottle authority.",
+  "BALT_engaged_2026_08_15": "With ATTH and BALT both cued, vertical speed held at -3 fpm at 13550 ft, bank 1.7 deg, pitch 1.2 deg. Confirms altitude hold is active."
+ },
+ "reading_autopilot_state": {
+  "indication_id": 6,
+  "how": "list_indication(6) exposes UFC_OptionDisplay1..5 (the labels) and UFC_OptionCueing1..5 (engagement cues).",
+  "cueing_semantics": "A UFC_OptionCueingN element containing ':' means row N is ENGAGED. If the element is absent, that mode is not engaged. This is how to verify a mode actually took, instead of inferring it from vertical speed.",
+  "verified_example": "2026-08-15: OptionCueing1=':' and OptionCueing3=':' with Cueing2/4 absent => ATTH + BALT engaged, HSEL/RALT not. Confirmed by VS holding -3 fpm."
+ },
+ "heading_set_switch": {
+  "control_type": "momentary SLEW switch, not a stepper -- the bug moves continuously while the key is held",
+  "measured_rate_ms_per_degree": 13.8,
+  "measured_rate_deg_per_second": 72.5,
+  "measured_utc": "2026-08-15",
+  "method": "engaged HSEL, waited for full rollout, sent one 400 ms slew right, waited for rollout again, measured 29.0 deg of heading change",
+  "why_it_matters": [
+   "A 55 ms tap sits near the registration threshold: 265 taps produced only 18 deg of turn.",
+   "A 2500 ms hold commands ~181 deg of bug movement -- a full reversal. This drove a ~50 deg bank that kicked the autopilot off.",
+   "ALWAYS calibrate before commanding a control whose rate is unknown. Two failures here came from guessing the rate in opposite directions."
+  ],
+  "usage": "python heading_hold.py --target <hdg> --ms-per-degree 14"
+ },
+ "autopilot_engagement_conditions": {
+  "BALT_requires_stable_flight": "BALT refuses to capture while the aircraft is oscillating. Instantaneous vertical speed is a trap -- a phugoid cycling +/-1600 fpm crosses zero twice per cycle and looks level at that instant. Judge stability across a window of history (see phugoid() in altitude_hold.py), not a single sample.",
+  "phugoid_cause": "ATTH + ATC with NO altitude hold produces a slow altitude oscillation (~30 s period, +/-1600 fpm) while airspeed stays pinned. Engage BALT BEFORE ATC to avoid it; ATTH+BALT+ATC together were rock steady (VS 0, IAS within 2 kt).",
+  "cues_are_the_truth": "UFC_OptionCueingN presence is the authoritative engaged/not-engaged signal. Poll it for ~12 s after a press -- displays stream at 1 Hz, so a single 3 s check has twice declared a working mode 'failed'."
+ },
+ "mode_dependencies": {
+  "ATTH_required_for_BALT": {
+   "claim": "User reports ATTH must be on for BALT to work.",
+   "evidence": "Observed ATTH and BALT cued together with altitude holding at -3 fpm.",
+   "confidence": "consistent with observation but NOT proven - a single observation cannot distinguish 'required' from 'both happened to be on'. To settle it: engage BALT alone from a clean state and see whether ATTH lights by itself."
+  }
+ }
+}

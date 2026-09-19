@@ -1,0 +1,356 @@
+{
+ "aircraft": "FA-18C_hornet",
+ "display": "4",
+ "confidence": "MEASURED - press-and-read-back sweeps with churn subtraction and reset-to-base, 2026-08-16 in flight. Tags per claim: MEASURED (display diff), MEASURED-X (cross-display diff: HUD/UFC), DOC (guide EA p204/p586/p79), PILOT (Dallas anchor). DOC-only entries are UNVERIFIED by measurement and say so.",
+ "method_notes": [
+  "The HSI page is scrape-OPAQUE: its list_indication(4) content is almost entirely the compass rose, so most HSI option presses produce no on-display diff. Effects were caught on OTHER displays (HUD id 1, UFC id 6) where they exist.",
+  "PB meanings are PAGE-DEPENDENT (measured: PB 17 = EW on TAC menu, TIMEUFC on HSI). The 'pages' section is the truth; 'buttons' is the deck-label compromise (HSI-use priority).",
+  "Display id census [MEASURED]: 1=HUD, 2=left DDI, 3=radar/right-DDI-content, 4=AMPCD, 5=IFEI (NOT a DDI), 6=UFC, 7=ALR-67 RWR azimuth indicator (RWR_PrioritySetting tracked DIS TYPE knob N->I, 2026-08-16). The old ddi5-is-right-DDI assumption is wrong: id 5 is the IFEI."
+ ],
+ "pages": {
+  "TAC_MENU": {
+   "3": {
+    "label": "HUD",
+    "tag": "MEASURED",
+    "evidence": "landing page = HUD repeater (CAS/G/Mach/heading scale)"
+   },
+   "5": {
+    "label": "STORES",
+    "tag": "MEASURED",
+    "evidence": "landing page = stores (GUN, Master_Arm_Status, STA labels)"
+   },
+   "13": {
+    "label": "SA",
+    "tag": "MEASURED+DOC",
+    "evidence": "landing page = SA compass; guide p204 names PB 13 explicitly"
+   },
+   "17": {
+    "label": "EW",
+    "tag": "MEASURED",
+    "evidence": "landing page = EW (ALE-47, ALR priority)"
+   },
+   "18": {
+    "label": "MENU",
+    "tag": "MEASURED",
+    "evidence": "toggles TAC/SUPT from every page tried; timer value at this slot when airborne (guide p79)"
+   },
+   "20": {
+    "label": "TGT DATA",
+    "tag": "MEASURED",
+    "evidence": "landing page = TGT DATA ownship"
+   },
+   "inert": [
+    "1",
+    "2",
+    "4",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "14",
+    "15",
+    "16",
+    "19"
+   ]
+  },
+  "SUPT_MENU": {
+   "1": {
+    "label": "ADI",
+    "tag": "MEASURED",
+    "evidence": "landing = EADI (attitude, airspeed, VV)"
+   },
+   "2": {
+    "label": "HSI",
+    "tag": "MEASURED",
+    "evidence": "landing = compass rose page (verified unfiltered)"
+   },
+   "6": {
+    "label": "MIDS",
+    "tag": "MEASURED",
+    "evidence": "landing = MIDS channels page"
+   },
+   "8": {
+    "label": "BIT",
+    "tag": "MEASURED",
+    "evidence": "landing = BIT failures/groups page"
+   },
+   "10": {
+    "label": "MUMI",
+    "tag": "MEASURED",
+    "evidence": "landing = MU/maintenance page (COMM, D/L, GPS, HARM, IFF)"
+   },
+   "11": {
+    "label": "CHKLST",
+    "tag": "MEASURED",
+    "evidence": "landing = landing checklist (hook, harness, flaps, trim)"
+   },
+   "12": {
+    "label": "ENG",
+    "tag": "MEASURED",
+    "evidence": "landing = engine page (EGT/EPR/FF/CDP L+R)"
+   },
+   "15": {
+    "label": "FCS",
+    "tag": "MEASURED",
+    "evidence": "landing = FCS page (servovalves, RB_*)"
+   },
+   "16": {
+    "label": "UFC BU",
+    "tag": "MEASURED",
+    "evidence": "landing = UFC backup keypad (0-9, CLR, ENT, COM1/2)"
+   },
+   "18": {
+    "label": "MENU",
+    "tag": "MEASURED",
+    "evidence": "toggles to TAC menu"
+   },
+   "19": {
+    "label": "FPAS",
+    "tag": "MEASURED",
+    "evidence": "landing = FPAS (endurance/range tables)"
+   },
+   "20": {
+    "label": "FUEL",
+    "tag": "MEASURED",
+    "evidence": "landing = fuel page (internal, bingo, tanks)"
+   },
+   "inert": [
+    "3",
+    "4",
+    "5",
+    "7",
+    "9",
+    "13",
+    "14",
+    "17"
+   ]
+  },
+  "HSI": {
+   "6": {
+    "label": "POS",
+    "tag": "VISUAL",
+    "evidence": "screenshot: POS/AINS label over PB 6. Guide p204 said MAP=6 - WRONG on glass"
+   },
+   "7": {
+    "label": null,
+    "tag": "MEASURED-NEGATIVE",
+    "evidence": "press produced NO scale change and no visible effect; guide p204 SCL=7 is WRONG"
+   },
+   "9": {
+    "label": "MK",
+    "tag": "VISUAL+DOC",
+    "evidence": "screenshot: MK1 label; guide p204 MK2=9"
+   },
+   "10": {
+    "label": "DATA",
+    "tag": "MEASURED",
+    "evidence": "landing = HSI DATA sublevel (A/C, WYPT, TCN, SEQUFC, OVFLY, PRECISE)"
+   },
+   "11": {
+    "label": "WYPT",
+    "tag": "MEASURED-X+DOC+PILOT",
+    "evidence": "press adds HUD FPPL_origin (nav steering cue); guide p204 WYPT at PB 11; pilot anchor"
+   },
+   "12": {
+    "label": "WYPT UP",
+    "tag": "DOC-UNVERIFIED",
+    "evidence": "guide p204/p675: increment waypoint at PB 12; scrape-invisible"
+   },
+   "13": {
+    "label": "WYPT DN",
+    "tag": "DOC-UNVERIFIED",
+    "evidence": "guide p204/p675: decrement waypoint at PB 13; scrape-invisible"
+   },
+   "14": {
+    "label": "WPDSG",
+    "tag": "DOC-UNVERIFIED",
+    "evidence": "guide p204/p400: WPDSG at PB 14; scrape-invisible"
+   },
+   "17": {
+    "label": "TIMEUFC",
+    "tag": "MEASURED-X",
+    "evidence": "press tore down UFC SET/ET/CD/ZTOD/LTOD time options (id 6)"
+   },
+   "18": {
+    "label": "MENU",
+    "tag": "MEASURED",
+    "evidence": "returns to menu"
+   },
+   "no_scrape_visible_effect": [
+    "4",
+    "19"
+   ],
+   "inert": [],
+   "1": {
+    "label": "ACL",
+    "tag": "VISUAL",
+    "evidence": "screenshot 2026-08-16 evening: ACL label at left column bottom"
+   },
+   "2": {
+    "label": "VEC",
+    "tag": "VISUAL",
+    "evidence": "screenshot: VEC label; N/I per guide p120"
+   },
+   "3": {
+    "label": "MODE",
+    "tag": "MEASURED",
+    "evidence": "press opened MODE sublevel (T UP/N UP/MAP/DCTR/SLEW left column); via sublevel T UP restored compass template Track_and_North_Up"
+   },
+   "5": {
+    "label": "TCN",
+    "tag": "VISUAL+DOC",
+    "evidence": "screenshot: TCN at left top; guide p148 box TCN (PB 5)"
+   },
+   "8": {
+    "label": "SCL",
+    "tag": "MEASURED",
+    "evidence": "presses cycled scale 80->40->20->10->5->160->80 (descending wrap). Was listed no-effect: scale readout is scrape-invisible"
+   },
+   "15": {
+    "label": "SEQ1",
+    "tag": "VISUAL",
+    "evidence": "screenshot: SEQ1 on right column; was listed inert"
+   },
+   "16": {
+    "label": "AUTO",
+    "tag": "VISUAL+DOC",
+    "evidence": "screenshot: AUTO label bottom row; guide p149 AUTO=PB 16. One press 2026-08-16 left it UNBOXED"
+   },
+   "20": {
+    "label": "SENSORS",
+    "tag": "VISUAL",
+    "evidence": "screenshot: SENSORS label bottom-left"
+   }
+  },
+  "HSI_MODE_SUBLEVEL": {
+   "_note": "Opened by HSI PB 3 (MODE). AUTO-TIMES-OUT after roughly 10-15 s - press the follow-up within a few seconds or it lands on the base page. Left column top->bottom:",
+   "5": {
+    "label": "T UP",
+    "tag": "MEASURED",
+    "evidence": "restored centered Track_and_North_Up compass from DCTR"
+   },
+   "4": {
+    "label": "N UP",
+    "tag": "VISUAL"
+   },
+   "3": {
+    "label": "MAP",
+    "tag": "VISUAL"
+   },
+   "2": {
+    "label": "DCTR",
+    "tag": "MEASURED-PARTIAL",
+    "evidence": "pressing DCTR while already decentered did NOT recenter; select T UP/N UP to leave DCTR. DCTR doubles the DISPLAYED SCL value (80 shows as 160)"
+   },
+   "1": {
+    "label": "SLEW",
+    "tag": "VISUAL"
+   }
+  }
+ },
+ "buttons": {
+  "1": {
+   "label": "ADI",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "2": {
+   "label": "HSI",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "3": {
+   "label": "HUD",
+   "plain": "TAC",
+   "inert": false
+  },
+  "4": {
+   "label": null,
+   "plain": null,
+   "inert": true
+  },
+  "5": {
+   "label": "STORES",
+   "plain": "TAC",
+   "inert": false
+  },
+  "6": {
+   "label": "MAP",
+   "plain": "UNVERIF",
+   "inert": false
+  },
+  "7": {
+   "label": "SCL",
+   "plain": "UNVERIF",
+   "inert": false
+  },
+  "8": {
+   "label": "BIT",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "9": {
+   "label": "MK",
+   "plain": "UNVERIF",
+   "inert": false
+  },
+  "10": {
+   "label": "DATA",
+   "plain": "HSI-MUMI",
+   "inert": false
+  },
+  "11": {
+   "label": "WYPT",
+   "plain": "HSI",
+   "inert": false
+  },
+  "12": {
+   "label": "WYPT UP",
+   "plain": "UNVERIF",
+   "inert": false
+  },
+  "13": {
+   "label": "SA",
+   "plain": "TAC-WPTDN",
+   "inert": false
+  },
+  "14": {
+   "label": "WPDSG",
+   "plain": "UNVERIF",
+   "inert": false
+  },
+  "15": {
+   "label": "FCS",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "16": {
+   "label": "UFC BU",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "17": {
+   "label": "TIME-EW",
+   "plain": "HSI-TAC",
+   "inert": false
+  },
+  "18": {
+   "label": "MENU",
+   "plain": "TAC-SUPT",
+   "inert": false
+  },
+  "19": {
+   "label": "FPAS",
+   "plain": "SUPT",
+   "inert": false
+  },
+  "20": {
+   "label": "FUEL-TGT",
+   "plain": "SUPT-TAC",
+   "inert": false
+  }
+ }
+}
