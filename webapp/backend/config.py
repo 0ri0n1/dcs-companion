@@ -24,6 +24,11 @@ class Settings:
     mission_awareness: bool = True
     install_root: Path | None = None
     saved_games: Path | None = None
+    jev_enabled: bool = False
+    jev_api_key: str = field(default="", repr=False)
+    jev_mode: str = "live"
+    jev_model: str = "jev-latest"
+    jev_timeout_s: float = 12.0
 
     @classmethod
     def from_env(cls):
@@ -39,10 +44,18 @@ class Settings:
         if host in ("0.0.0.0", "::") or any("*" in x for x in origins):
             raise ValueError("Use one explicit interface address and exact origins; wildcards are refused.")
         mission = os.getenv("DCS_DASH_MISSION")
+        jev_key = os.getenv("TYPESAFE_API_KEY", "")
+        jev_mode = os.getenv("DCS_DASH_JEV_MODE", "live").lower()
+        if jev_mode not in ("live", "mock"):
+            raise ValueError("DCS_DASH_JEV_MODE must be live or mock.")
+        jev_enabled = os.getenv("DCS_DASH_JEV", "YES" if jev_key else "NO") == "YES"
         return cls(host=host, port=port, lan_enabled=lan, pairing_token=token,
                    origins=origins, dry_run=os.getenv("DCS_DASH_ARM", "") != "YES",
                    expiry_s=max(3, min(30, float(os.getenv("DCS_DASH_EXPIRY", "15")))),
                    mission_path=Path(mission) if mission else None,
                    install_root=Path(os.environ["DCS_DASH_INSTALL_ROOT"]) if os.getenv("DCS_DASH_INSTALL_ROOT") else None,
                    saved_games=Path(os.environ["DCS_DASH_SAVED_GAMES"]) if os.getenv("DCS_DASH_SAVED_GAMES") else None,
-                   mission_awareness=os.getenv("DCS_DASH_MISSION_AWARENESS", "YES") == "YES")
+                   mission_awareness=os.getenv("DCS_DASH_MISSION_AWARENESS", "YES") == "YES",
+                   jev_enabled=jev_enabled, jev_api_key=jev_key, jev_mode=jev_mode,
+                   jev_model=os.getenv("DCS_DASH_JEV_MODEL", "jev-latest"),
+                   jev_timeout_s=max(2, min(30, float(os.getenv("DCS_DASH_JEV_TIMEOUT", "12")))))

@@ -16,6 +16,8 @@ On a paired phone, use **Connect controls → Enable live controls**, then keep 
 
 **Controls** shows supported aircraft assignments, conflicts and favourites. **Cockpit**, **Sensors**, **Flight data** and **Data Health** expose exported information, its freshness and connection diagnostics. **Your setup** selects the local DCS installation/profile; **Appearance** stores display preferences on that browser.
 
+**Jev Copilot** is an optional TypeSafe integration. It sends an explicitly reduced state to Jev for bounded typed judgments and displays the result without queuing aircraft input. The rest of the dashboard remains offline-capable and requires no AI account. See [Jev setup, privacy boundary and safeguards](docs/JEV.md).
+
 For phone access, use **Start Tablet Dashboard.cmd** and **Pair phone** on the PC. It uses trusted-LAN HTTP, requires separate firewall permission where needed, and does not turn on live controls. Backend restarts invalidate phone pairing. See [Connections](docs/CONNECTIONS.md).
 
 ## Build and run
@@ -92,6 +94,7 @@ Generated `runtime/` and `data/`, the Python environment, frontend dependencies/
 - [Native display setup and restore](docs/DISPLAY_FEEDS.md)
 - [Pairing and connection recovery](docs/CONNECTIONS.md)
 - [API/data schema](docs/SCHEMA.md)
+- [Jev copilot](docs/JEV.md)
 - [Validation history](docs/VALIDATION.md)
 
 Detailed repair history and test evidence belong in the validation documents, rather than the setup steps above.
